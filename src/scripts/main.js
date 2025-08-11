@@ -5,7 +5,6 @@ const tHead = document.querySelector('thead');
 const tBody = document.querySelector('tbody');
 
 const thHead = tHead.querySelectorAll('th');
-const rowsBody = tBody.querySelectorAll('tr');
 
 const currentSort = {};
 
@@ -41,12 +40,16 @@ thHead.forEach((th) => {
   });
 });
 
-rowsBody.forEach((row) => {
-  row.addEventListener('click', function () {
-    rowsBody.forEach((r) => r.classList.remove('active'));
+tBody.addEventListener('click', function (e) {
+  const row = e.target.closest('tr');
 
-    this.classList.add('active');
-  });
+  if (!row) {
+    return;
+  }
+
+  tBody.querySelectorAll('tr').forEach((r) => r.classList.remove('active'));
+
+  row.classList.add('active');
 });
 
 createForm();
@@ -103,7 +106,7 @@ function createForm() {
 
     pushNotification(
       'Title of Success message',
-      'Empoyeed added in table',
+      'Employee added in table',
       'success',
     );
 
